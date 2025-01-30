@@ -6,14 +6,15 @@ import {
   TextInput,
   TouchableOpacity,
   Pressable,
-  TextInputProps, 
+  TextInputProps,
 } from 'react-native';
+import { useRouter } from 'expo-router';
 
-import Eye from '@/assets/images/Session2/Eye'; 
-import EyeSplash from '@/assets/images/Session2/EyeSlash'; 
+import Eye from '@/assets/images/Session2/Eye';
+import EyeSplash from '@/assets/images/Session2/EyeSlash';
 
 interface InputProps extends TextInputProps {
-  isPassword?: boolean; 
+  isPassword?: boolean;
 }
 
 const Input: React.FC<InputProps> = (props) => {
@@ -25,7 +26,7 @@ const Input: React.FC<InputProps> = (props) => {
         style={styles.textInput}
         secureTextEntry={props.isPassword && !isPasswordVisible}
         placeholderTextColor="#A7A7A7"
-        {...props} 
+        {...props}
       />
       {props.isPassword && (
         <Pressable
@@ -40,18 +41,44 @@ const Input: React.FC<InputProps> = (props) => {
 };
 
 const NewPassword: React.FC = () => {
+  const router = useRouter();
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
+  const handleLogin = () => {
+    if (password && confirmPassword) {
+      router.push('/Session2/Home');
+    }
+  };
+
+  const isButtonActive = password && confirmPassword;
+
   return (
     <View style={styles.container}>
       <Text style={styles.text1}>New Password</Text>
       <Text style={styles.text2}>Enter new password</Text>
 
       <Text style={styles.label}>Password</Text>
-      <Input placeholder="Enter your password" isPassword />
+      <Input
+        placeholder="Enter your password"
+        isPassword
+        value={password}
+        onChangeText={setPassword}
+      />
 
       <Text style={styles.label}>Confirm Password</Text>
-      <Input placeholder="Confirm your password" isPassword />
+      <Input
+        placeholder="Confirm your password"
+        isPassword
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+      />
 
-      <TouchableOpacity style={styles.loginButton}>
+      <TouchableOpacity
+        style={[styles.loginButton, isButtonActive && styles.activeButton]}
+        onPress={handleLogin}
+        disabled={!isButtonActive}
+      >
         <Text style={styles.loginButtonText}>Log In</Text>
       </TouchableOpacity>
     </View>
@@ -66,7 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: '#FFFFFF',
-    paddingTop: 20,
+    paddingTop: 150,
     paddingHorizontal: 24,
   },
   text1: {
@@ -134,6 +161,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 50,
+  },
+  activeButton: {
+    backgroundColor: '#007AFF', 
   },
   loginButtonText: {
     width: 45,

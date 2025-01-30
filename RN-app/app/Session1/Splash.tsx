@@ -1,15 +1,10 @@
 import React, { useEffect } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 
 const S1S1Image = require('@/assets/images/Session1/S1S1.png');
 
-type SplashProps = {
-  navigation: NavigationProp<any>;
-};
-
-const Splash: React.FC<SplashProps> = () => {
+const Splash: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {

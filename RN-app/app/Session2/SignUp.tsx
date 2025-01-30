@@ -10,16 +10,11 @@ import {
   Pressable,
   TextInputProps,
 } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
 
 const googleImage = require('@/assets/images/Session2/google.png');
 import Eye from '@/assets/images/Session2/Eye';
 import EyeSplash from '@/assets/images/Session2/EyeSlash';
 import { useRouter } from 'expo-router';
-
-type SignUpProps = {
-  navigation: NavigationProp<any>;
-};
 
 interface InputProps extends TextInputProps {
   isPassword?: boolean;
@@ -52,7 +47,7 @@ const Checkmark = () => (
   <View style={styles.checkmark} />
 );
 
-const SignUp: React.FC<SignUpProps> = () => {
+const SignUp: React.FC = () => {
   const router = useRouter();
 
   const [isChecked, setIsChecked] = React.useState(false);
@@ -66,6 +61,10 @@ const SignUp: React.FC<SignUpProps> = () => {
     if (isChecked && fullName && phoneNumber && email && password && confirmPassword) {
       router.push('/Session2/LogIn');
     }
+  };
+
+  const handleSignIn = () => {
+    router.push('/Session2/LogIn');
   };
 
   const isFormValid = fullName && phoneNumber && email && password && confirmPassword;
@@ -142,7 +141,9 @@ const SignUp: React.FC<SignUpProps> = () => {
 
         <View style={styles.signUpContainer}>
           <Text style={styles.alreadyHaveAccountText}>Already have an account?</Text>
-          <Text style={styles.signUpText}> Sign In</Text>
+          <Pressable onPress={handleSignIn}>
+            <Text style={styles.signUpText}> Sign In</Text>
+          </Pressable>
         </View>
 
         <View style={styles.orLogInUsingContainer}>
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
-    paddingTop: 20,
+    paddingTop: 110,
     paddingHorizontal: 24,
     paddingBottom: 40,
   },
@@ -310,8 +311,8 @@ const styles = StyleSheet.create({
     color: '#A7A7A7',
   },
   image: {
-    width: 24,
-    height: 24,
+    width: 16,
+    height: 16,
     resizeMode: 'contain',
     alignSelf: 'center',
   },

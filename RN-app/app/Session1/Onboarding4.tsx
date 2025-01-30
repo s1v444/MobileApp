@@ -1,14 +1,10 @@
 import React from 'react';
 import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import { NavigationProp } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
+
 const S1S3Image = require('@/assets/images/Session1/S1S3.png');
 
-type Onboarding4Props = {
-  navigation: NavigationProp<any>;
-};
-
-const Onboarding4: React.FC<Onboarding4Props> = () => {
+const Onboarding4: React.FC = () => {
   const router = useRouter();
 
   return (

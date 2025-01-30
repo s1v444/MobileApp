@@ -1,39 +1,34 @@
 import React from 'react';
-import { Text, StyleSheet, View, TouchableOpacity, Image } from 'react-native';
-import { NavigationProp } from '@react-navigation/native'; 
+import { Text, StyleSheet, SafeAreaView, View, Pressable, Image } from 'react-native';
 import { useRouter } from 'expo-router';
 
 const S1S2Image = require('@/assets/images/Session1/S1S2.png');
 
-type Onboarding1Props = {
-  navigation: NavigationProp<any>; 
-};
-
-const Onboarding1: React.FC<Onboarding1Props> = () => {
+const Onboarding1: React.FC = () => {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Image source={S1S2Image} style={styles.image} />
       <View style={styles.textContainer}>
         <Text style={styles.text}>Quick Delivery At Your Doorstep</Text>
         <Text style={styles.text2}>Enjoy quick pick-up and delivery to your destination</Text>
       </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity
+        <Pressable
           style={styles.button1}
-          onPress={() => router.push('/Session1/Onboarding4')} 
+          onPress={() => router.push('/Session1/Onboarding3')} 
         >
           <Text style={styles.buttonText1}>Skip</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
+        </Pressable>
+        <Pressable
           style={styles.button2}
           onPress={() => router.push('/Session1/Onboarding4')} 
         >
           <Text style={styles.buttonText2}>Next</Text>
-        </TouchableOpacity>
+        </Pressable>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

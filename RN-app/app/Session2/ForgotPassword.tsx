@@ -6,14 +6,15 @@ import {
   TextInput,
   TouchableOpacity,
   Pressable,
-  TextInputProps, 
+  TextInputProps,
 } from 'react-native';
+import { useRouter } from 'expo-router';
 
-import Eye from '@/assets/images/Session2/Eye'; 
-import EyeSplash from '@/assets/images/Session2/EyeSlash'; 
+import Eye from '@/assets/images/Session2/Eye';
+import EyeSplash from '@/assets/images/Session2/EyeSlash';
 
 interface InputProps extends TextInputProps {
-  isPassword?: boolean; 
+  isPassword?: boolean;
 }
 
 const Input: React.FC<InputProps> = (props) => {
@@ -25,7 +26,7 @@ const Input: React.FC<InputProps> = (props) => {
         style={styles.textInput}
         secureTextEntry={props.isPassword && !isPasswordVisible}
         placeholderTextColor="#A7A7A7"
-        {...props} 
+        {...props}
       />
       {props.isPassword && (
         <Pressable
@@ -40,24 +41,54 @@ const Input: React.FC<InputProps> = (props) => {
 };
 
 const ForgotPassword: React.FC = () => {
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const isFormValid = email.trim() !== '' && password.trim() !== '';
+
+  const handleSendOtp = () => {
+    if (isFormValid) {
+      router.push('/Session2/OTPVerification'); 
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.forgotPasswordText}>Forgot Password</Text>
       <Text style={styles.enterEmailText}>Enter your email address</Text>
 
       <Text style={styles.label}>Email Address</Text>
-      <Input placeholder="Enter your email address" />
+      <Input
+        placeholder="Enter your email address"
+        value={email}
+        onChangeText={setEmail}
+      />
 
       <Text style={styles.label}>Password</Text>
-      <Input placeholder="Enter your password" isPassword />
+      <Input
+        placeholder="Enter your password"
+        isPassword
+        value={password}
+        onChangeText={setPassword}
+      />
 
-      <TouchableOpacity style={styles.sendOtpButton}>
+      <TouchableOpacity
+        style={[
+          styles.sendOtpButton,
+          isFormValid ? styles.sendOtpButtonActive : null,
+        ]}
+        onPress={handleSendOtp}
+        disabled={!isFormValid}
+      >
         <Text style={styles.sendOtpButtonText}>Send OTP</Text>
       </TouchableOpacity>
 
       <View style={styles.signUpContainer}>
         <Text style={styles.alreadyHaveAccountText}>Remember password? Back to </Text>
-        <Text style={styles.signUpText}> Sign In</Text>
+        <TouchableOpacity onPress={() => router.push('/Session2/LogIn')}>
+          <Text style={styles.signUpText}> Sign In</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -71,7 +102,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     backgroundColor: '#FFFFFF',
-    paddingTop: 20,
+    paddingTop: 150,
     paddingHorizontal: 24,
   },
   forgotPasswordText: {
@@ -139,6 +170,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 24,
+  },
+  sendOtpButtonActive: {
+    backgroundColor: '#0560FA', 
   },
   sendOtpButtonText: {
     width: 70,
